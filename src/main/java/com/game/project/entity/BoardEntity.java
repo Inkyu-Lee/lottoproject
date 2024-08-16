@@ -2,13 +2,12 @@ package com.game.project.entity;
 
 import com.game.project.dto.BoardDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class BoardEntity extends DateEntity {
 
     @Id

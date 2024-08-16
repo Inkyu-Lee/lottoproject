@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,6 +46,8 @@ public class BoardController {
 
     @GetMapping("/api/article/all")
     public List<BoardEntity> findAllArticle(){
+        List<BoardEntity> articles = boardService.findAll();
+        BoardEntity testBoard = articles.get(1);
         return boardService.findAll();
     }
 

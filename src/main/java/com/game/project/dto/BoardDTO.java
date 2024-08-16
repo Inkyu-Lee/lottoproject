@@ -5,6 +5,10 @@ import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +24,7 @@ public class BoardDTO {
     private String content;
 
     private int hits;
+
 
     public BoardEntity toEntity(){
         return new BoardEntity(id, title, nickname, content, hits);
