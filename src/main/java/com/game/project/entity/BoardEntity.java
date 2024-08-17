@@ -20,7 +20,7 @@ public class BoardEntity extends DateEntity {
     @Column
     private String nickname;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column
@@ -31,4 +31,9 @@ public class BoardEntity extends DateEntity {
     }
 
 
+    public void patch(BoardDTO boardDTO) {
+        this.title = boardDTO.getTitle();
+        this.nickname = boardDTO.getNickname();
+        this.content = boardDTO.getContent();
+    }
 }

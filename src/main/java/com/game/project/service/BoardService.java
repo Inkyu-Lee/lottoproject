@@ -6,6 +6,7 @@ import com.game.project.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -37,7 +38,9 @@ public class BoardService {
     // PATCH
 
     public BoardEntity updateArticle(Long id, BoardDTO boardDTO) {
-        BoardEntity article = boardDTO.toEntity();
+        BoardEntity article = boardRepository.findById(id).
+                orElseThrow(() -> new NoSuchElementException("찾을 수 없음(게시글 변경)"));
+        article.patch(boardDTO);
         return boardRepository.save(article);
     }
 

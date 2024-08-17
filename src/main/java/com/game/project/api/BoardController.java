@@ -52,7 +52,7 @@ public class BoardController {
     }
 
     // DELETE
-
+    @DeleteMapping("/api/article/delete/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable Long id){
         BoardEntity article = boardService.findByArticleWithId(id);
 
@@ -61,7 +61,7 @@ public class BoardController {
     }
 
     // PATCH
-
+    @PatchMapping("/api/article/update/{id}")
     public ResponseEntity<BoardEntity> updateArticle(@PathVariable Long id, @RequestBody BoardDTO boardDTO){
         BoardEntity article = boardService.updateArticle(id, boardDTO);
 
