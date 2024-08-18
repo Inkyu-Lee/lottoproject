@@ -3,6 +3,8 @@ package com.game.project.api;
 import com.game.project.dto.BoardDTO;
 import com.game.project.entity.BoardEntity;
 import com.game.project.service.BoardService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +35,16 @@ public class BoardController {
 
     }
 
+    @PostMapping("/api/article/hits/{id}")
+    public ResponseEntity<BoardEntity> updateHits(@PathVariable Long id){
+        boardService.updateArticleHits(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     // GET
     @GetMapping("/api/article/{id}")
-    public ResponseEntity<BoardEntity> findByArticleId(@PathVariable Long id){
+    public ResponseEntity<BoardEntity> findByArticleId(@PathVariable Long id, HttpSession session, HttpServletRequest request) {
 
         BoardEntity article = boardService.findByArticleWithId(id);
         boolean isNotNull = article != null;
@@ -55,6 +64,10 @@ public class BoardController {
     @DeleteMapping("/api/article/delete/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable Long id){
         BoardEntity article = boardService.findByArticleWithId(id);
+
+        if ( article != null ) {
+            boardService.deleteArticle(id);
+        }
 
         return ( article != null ) ? ResponseEntity.status(HttpStatus.OK).body(String.valueOf(id) + "번 게시글 삭제완료") :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");

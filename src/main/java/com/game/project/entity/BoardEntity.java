@@ -11,7 +11,7 @@ import lombok.*;
 public class BoardEntity extends DateEntity {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
     @Column

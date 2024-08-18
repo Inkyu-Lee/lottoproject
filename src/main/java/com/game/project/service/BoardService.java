@@ -2,7 +2,10 @@ package com.game.project.service;
 
 import com.game.project.dto.BoardDTO;
 import com.game.project.entity.BoardEntity;
+import com.game.project.entity.CommentEntity;
 import com.game.project.repository.BoardRepository;
+import com.game.project.repository.CommentRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +18,18 @@ import java.util.NoSuchElementException;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
 
     // POST
 
     public BoardEntity createNewArticle(BoardDTO boardDTO) {
         BoardEntity article = boardDTO.toEntity();
         return boardRepository.save(article);
+    }
+
+    @Transactional
+    public void updateArticleHits(Long id){
+        boardRepository.updateHits(id);
     }
 
     // GET
@@ -45,10 +54,16 @@ public class BoardService {
     }
 
     // DELETE
-
+    @Transactional
     public BoardEntity deleteArticle(Long id) {
         BoardEntity article = findByArticleWithId(id);
+        List<CommentEntity> comments = commentRepository.findByArticleById(id);
+        if (!comments.isEmpty()) {
+            commentRepository.deleteAll(comments);
+        }
         boardRepository.delete(article);
         return article;
     }
+
+
 }
